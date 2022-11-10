@@ -1,5 +1,6 @@
 package Model.Utils;
 
+import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -47,5 +48,25 @@ public class MyDictionary<T1, T2> implements MyIDictionary<T1, T2>{
         for (T1 key: dict.keySet())
             copyDict.put(key, dict.get(key));
         return copyDict;
+    }
+
+    @Override
+    public String toString(){
+        var sb = new StringBuilder();
+        sb.append("{ ");
+        for (T1 key: this.dict.keySet() ){
+            if (this.dict.get(key) instanceof BufferedReader) {
+                sb.append(key.toString());
+                sb.append(",");
+            }
+            else {
+                sb.append(key.toString());
+                sb.append("->");
+                sb.append(this.dict.get(key).toString());
+                sb.append(",");
+            }
+        }
+        sb = sb.replace(sb.length()-1, sb.length(), "}");
+        return sb.toString();
     }
 }

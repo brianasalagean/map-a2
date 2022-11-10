@@ -6,7 +6,7 @@ import Model.Statements.IStatement;
 import Model.Utils.MyIStack;
 import Repository.IRepository;
 
-import java.util.Objects;
+import java.util.EmptyStackException;
 
 public class Controller {
     IRepository repository;
@@ -22,26 +22,39 @@ public class Controller {
         if (stack.isEmpty())
             throw new InterpreterException("Program state stack is empty");
         IStatement currentStatement = stack.pop();
-        System.out.println(currentStatement.toString());
-        state.setExeStack(stack);
         return currentStatement.execute(state);
+    }
+
+    public void oneStepExecutionOneStep(ProgramState state, boolean flag) throws InterpreterException {
+        MyIStack<IStatement> stack = state.getExeStack();
+        if (stack.isEmpty()) {
+            throw new InterpreterException("The execution stack is empty");
+        }
+        IStatement currentStatement = stack.pop();
+        currentStatement.execute(state);
+        if (flag) {
+            display();
+        }
     }
 
     public void allSteps() throws InterpreterException {
         ProgramState program = this.repository.getCurrentState();
         display();
-        while (!program.getExeStack().isEmpty()){
+        while (!program.getExeStack().isEmpty()) {
             oneStep(program);
             display();
         }
     }
 
-    public void setDisplayFlag(boolean value){
+    public void setDisplayFlag(boolean value) {
         displayFlag = value;
     }
+
     private void display() {
-        if (displayFlag){
-            System.out.println(this.repository.getCurrentState().toString());
-        }
+        System.out.println(this.repository.getCurrentState().toString());
+    }
+
+    public ProgramState getCurrentProgramState() {
+        return this.repository.getCurrentState();
     }
 }
