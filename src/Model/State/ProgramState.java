@@ -59,60 +59,62 @@ public class ProgramState {
         return this.heap;
     }
 
-    public String exeStackToString() throws InterpreterException {
-        StringBuilder exeStackStringBuilder = new StringBuilder();
-        List<IStatement> stack = new ArrayList<>();
-        MyIStack<IStatement> newStack= exeStack;
-        while (!exeStack.isEmpty()){
-            stack.add(newStack.getTop());
-            newStack.pop();
-        }
-        for (IStatement statement: stack) {
-            exeStackStringBuilder.append(statement.toString()).append("\n");
-        }
-        return exeStackStringBuilder.toString();
-    }
+//    public String exeStackToString() throws InterpreterException {
+//        StringBuilder exeStackStringBuilder = new StringBuilder();
+//        List<IStatement> stack = new ArrayList<>();
+//        MyIStack<IStatement> newStack= exeStack;
+//        while (!exeStack.isEmpty()){
+//            stack.add(newStack.getTop());
+//            newStack.pop();
+//        }
+//        for (IStatement statement: stack) {
+//            exeStackStringBuilder.append(statement.toString()).append("\n");
+//        }
+//        return exeStackStringBuilder.toString();
+//    }
 
-    public String symTableToString() throws InterpreterException {
-        StringBuilder symTableStringBuilder = new StringBuilder();
-        for (String key: symTable.getKeys()) {
-            symTableStringBuilder.append(String.format("%s->%s\n", key, symTable.get(key).toString()));
-        }
-        return symTableStringBuilder.toString();
-    }
+//    public String symTableToString() throws InterpreterException {
+//        StringBuilder symTableStringBuilder = new StringBuilder();
+//        for (String key: symTable.getKeys()) {
+//            symTableStringBuilder.append(String.format("%s->%s\n", key, symTable.get(key).toString()));
+//        }
+//        return symTableStringBuilder.toString();
+//    }
 
-    public String outputToString() {
-        StringBuilder outputStringBuilder = new StringBuilder();
-        for (Value value: output.getList()){
-            outputStringBuilder.append(String.format("%s\n", value.toString()));
-        }
-        return outputStringBuilder.toString();
-    }
+//    public String outputToString() {
+//        StringBuilder outputStringBuilder = new StringBuilder();
+//        for (Value value: output.getList()){
+//            outputStringBuilder.append(String.format("%s\n", value.toString()));
+//        }
+//        return outputStringBuilder.toString();
+//    }
+//
+//    public String heapToString() throws InterpreterException {
+//        StringBuilder heapStringBuilder = new StringBuilder();
+//        for (int key: heap.keySet()) {
+//            heapStringBuilder.append(String.format("%d->%s\n", key, heap.get(key).toString()));
+//        }
+//        return heapStringBuilder.toString();
+//    }
 
-    public String heapToString() throws InterpreterException {
-        StringBuilder heapStringBuilder = new StringBuilder();
-        for (int key: heap.keySet()) {
-            heapStringBuilder.append(String.format("%d->%s\n", key, heap.get(key).toString()));
-        }
-        return heapStringBuilder.toString();
-    }
+//    @Override
+//    public String toString() {
+//        try {
+//            return "Execution stack:\n" + exeStackToString() +
+//                    "\nSymbol table:\n" + symTableToString() +
+//                    "\nOutput list:\n" + outputToString() + "\n";
+//        } catch (InterpreterException e) {
+//            System.out.println(e.toString());
+//        }
+//        return "";
+//    }
 
     @Override
     public String toString() {
-        try {
-            return "Execution stack:\n" + exeStackToString() +
-                    "\nSymbol table:\n" + symTableToString() +
-                    "\nOutput list:\n" + outputToString() + "\n";
-        } catch (InterpreterException e) {
-            System.out.println(e.toString());
-        }
-        return "";
-    }
-
-    public String programStateToString() throws InterpreterException {
-        return "Execution stack:\n" + exeStackToString() +
-                "\nSymbol table:\n" + symTableToString() +
-                "\nOutput list:\n" + outputToString() +
-                "\nHeap memory:\n" + heapToString() + "\n";
+        //"Original\n" + this.originalProgram.toString() + "\n"
+        return  "Stack\n" + this.exeStack.toString() + "\n"
+                + "SymbolTable\n" + this.symTable.toString() + "\n"
+                + "Output\n" + this.output.toString()+"\n"
+                + "------------";
     }
 }

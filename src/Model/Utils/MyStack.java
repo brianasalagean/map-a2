@@ -41,4 +41,18 @@ public class MyStack<T> implements MyIStack<T>{
     public Stack<T> getStack() {
         return stack;
     }
+
+    @Override
+    public String toString(){
+        var sb = new StringBuilder();
+
+        sb.append("(");
+        for (T elem : this.stack) {
+            sb.append(elem.toString());
+            if(!(elem.equals(this.stack.peek())))
+                sb.append(" | ");
+        }
+        sb.append(")");
+        return sb.toString();
+    }
 }
